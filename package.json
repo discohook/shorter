@@ -2,7 +2,7 @@
   "name": "shorter",
   "private": true,
   "scripts": {
-    "start": "node build/server.js",
+    "start": "node ./out/server.js",
     "build": "tsc"
   },
   "license": "ISC",

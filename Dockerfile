@@ -10,4 +10,4 @@ RUN yarn build
 
 EXPOSE 8000
 
-CMD [ "node", "build/server.js" ]
+CMD [ "node", "./out/server.js" ]

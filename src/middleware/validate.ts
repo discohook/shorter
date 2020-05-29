@@ -16,7 +16,10 @@ export const validate = <T>(schema: Schema<T>): Middleware => {
       if (error.name !== "ValidationError") throw error
 
       context.response.status = 400
-      context.response.body = error
+      context.response.body = {
+        message: error.message,
+        errors: error.errors,
+      }
     }
   }
 }
