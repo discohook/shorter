@@ -8,6 +8,7 @@ services:
     environment:
       REDIS_HOST: db
       REDIS_PORT: 6379
+      PUBLIC_URL:
       ALLOWED_SHORTEN_ORIGINS: "https://discohook.org"
   db:
     image: redis:6.0-alpine

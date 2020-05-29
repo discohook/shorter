@@ -10,6 +10,7 @@ const schema = yup.object().shape({
   url: yup.string().url().required(),
 })
 
+const PUBLIC_URL = process.env.PUBLIC_URL
 const ALLOWED_SHORTEN_ORIGINS = new Set(
   process.env.ALLOWED_SHORTEN_ORIGINS?.split(","),
 )
@@ -33,6 +34,6 @@ router.post("/create", validate(schema), async (context) => {
 
   context.body = {
     id,
-    url: `${context.origin}/go/${id}`,
+    url: `${PUBLIC_URL ?? context.origin}/go/${id}`,
   }
 })
