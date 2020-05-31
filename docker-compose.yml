@@ -9,6 +9,7 @@ services:
       REDIS_HOST: db
       REDIS_PORT: 6379
       PUBLIC_URL:
+      MAX_TTL: 21600
       ALLOWED_SHORTEN_ORIGINS: "https://discohook.org"
   db:
     image: redis:6.0-alpine
