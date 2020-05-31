@@ -14,11 +14,11 @@ const schema = yup.object().shape({
 })
 
 router.post("/create", validate(schema), async (context) => {
-  const { url, expires } = context.request.body
+  const { url, ttl } = context.request.body
 
   const id = await nanoid()
 
-  const expiresAt = new Date(Date.now() + expires * 1000)
+  const expiresAt = new Date(Date.now() + ttl * 1000)
   await db.set(id, url)
   await db.pexpireat(id, expiresAt.getTime())
 
