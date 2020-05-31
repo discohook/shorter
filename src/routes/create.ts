@@ -1,8 +1,8 @@
 import Router from "@koa/router"
-import shortid from "shortid"
 import * as yup from "yup"
 import { db } from "../db"
 import { validate } from "../middleware/validate"
+import { nanoid } from "../nanoid"
 
 export const router = new Router()
 
@@ -29,7 +29,7 @@ router.post("/create", validate(schema), async (context) => {
     return
   }
 
-  const id = shortid()
+  const id = await nanoid()
   await db.set(id, url, "EX", 60 * 60 * 6)
 
   context.body = {
