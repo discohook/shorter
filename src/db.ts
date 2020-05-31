@@ -1,6 +1,4 @@
 import Redis from "ioredis"
+import { REDIS_HOST, REDIS_PORT } from "./config"
 
-export const db = new Redis(
-  Number(process.env.REDIS_PORT ?? 6379),
-  process.env.REDIS_HOST ?? "127.0.0.1",
-)
+export const db = new Redis(REDIS_PORT, REDIS_HOST)
