@@ -12,7 +12,7 @@ export const getUniqueId = async () => {
     attempt += 1
 
     const id = await nanoid()
-    if (!db.exists(id)) {
+    if (!(await db.exists(id))) {
       return id
     }
 
