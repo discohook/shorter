@@ -6,16 +6,14 @@ services:
     depends_on:
       - db
     environment:
-      REDIS_HOST: db
-      REDIS_PORT: 6379
-      PUBLIC_URL:
-      MAX_TTL: 21600
-      ALLOWED_SHORTEN_ORIGINS: "https://discohook.org"
+      REDIS_ADDRESS: redis://db
+      SHORTEN_ALLOWED_HOSTS: *
+      SHORTEN_MAX_TTL: -1
   db:
     image: redis:6.0-alpine
+    restart: always
     command: redis-server --appendonly yes
     volumes:
       - "data:/data"
-    restart: always
 volumes:
   data:
