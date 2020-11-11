@@ -7,7 +7,7 @@ services:
       - db
     environment:
       REDIS_ADDRESS: redis://db
-      SHORTEN_ALLOWED_HOSTS: *
+      SHORTEN_ALLOWED_HOSTS: "*"
       SHORTEN_MAX_TTL: -1
   db:
     image: redis:6.0-alpine
