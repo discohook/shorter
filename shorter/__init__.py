@@ -3,11 +3,13 @@ import os
 
 import aioredis
 from quart import Quart, exceptions
+from quart_cors import cors
 
 import shorter.bp.shortener
 from shorter.errors import ApiError
 
 app = Quart(__name__)
+app = cors(app)
 
 app.register_blueprint(shorter.bp.shortener.bp)
 
