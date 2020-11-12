@@ -33,4 +33,7 @@ def handle_api_error(error: ApiError):
 
 @app.errorhandler(exceptions.HTTPException)
 def handle_exception(exception: exceptions.HTTPException):
-    return {"message": exception.name}, exception.status_code
+    try:
+        return {"message": exception.name}, exception.status_code
+    except AttributeError:
+        return {"message": "Internal Server Error"}, 500
