@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from urllib.parse import urlunparse
 
 from quart import Blueprint, current_app, redirect, request, url_for
 from shorter import config
@@ -26,7 +27,16 @@ async def create():
     await current_app.redis.set(shortname, url)
     await current_app.redis.expire(shortname, ttl)
 
-    url = request.url_root.strip("/") + url_for("shortener.go", shortname=shortname)
+    url = urlunparse(
+        (
+            request.headers.get("X-Forwarded-Proto", "http"),
+            request.headers["Host"],
+            url_for("shortener.go", shortname=shortname),
+            None,
+            None,
+            None,
+        )
+    )
 
     return {
         "id": shortname,
