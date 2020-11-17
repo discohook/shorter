@@ -2,6 +2,7 @@ from datetime import datetime, timedelta
 from urllib.parse import urlunparse
 
 from quart import Blueprint, current_app, redirect, request, url_for
+from quart_rate_limiter import rate_limit
 from shorter import config
 from shorter.common import generate_shortname
 from shorter.errors import NotFoundError
@@ -11,6 +12,7 @@ bp = Blueprint("shortener", __name__)
 
 
 @bp.route("/create", methods=["POST"])
+@rate_limit(limit=60, period=timedelta(minutes=10))
 async def create():
     payload = validate(await request.get_json(), CREATE_SCHEMA)
 
@@ -46,6 +48,7 @@ async def create():
 
 
 @bp.route("/go/<shortname>")
+@rate_limit(limit=120, period=timedelta(minutes=10))
 async def go(shortname):
     url = await current_app.redis.get(shortname)
 

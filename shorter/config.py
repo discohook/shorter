@@ -1,5 +1,7 @@
 import os
 
+redis_address = os.environ.get("REDIS_ADDRESS")
+
 allowed_hosts = os.environ.get("SHORTEN_ALLOWED_HOSTS", "*").split(",")
 if allowed_hosts == ["*"]:
     allowed_hosts = None
