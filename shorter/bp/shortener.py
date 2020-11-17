@@ -26,8 +26,9 @@ async def create():
         expires = None
 
     shortname = await generate_shortname(8)
-    await current_app.redis.set(shortname, url)
-    await current_app.redis.expire(shortname, ttl)
+    key = f"{current_app.import_name}-shorten-{shortname}"
+    await current_app.redis.set(key, url)
+    await current_app.redis.expire(key, ttl)
 
     url = urlunparse(
         (
@@ -50,7 +51,8 @@ async def create():
 @bp.route("/go/<shortname>")
 @rate_limit(limit=120, period=timedelta(minutes=10))
 async def go(shortname):
-    url = await current_app.redis.get(shortname)
+    key = f"{current_app.import_name}-shorten-{shortname}"
+    url = await current_app.redis.get(key)
 
     if not url:
         raise NotFoundError(f"Shorten {shortname!r} not found")
