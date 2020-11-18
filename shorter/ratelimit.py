@@ -20,6 +20,7 @@ class RedisStore(RateLimiterStoreABC):
 
     async def set(self, key: str, tat: datetime):
         await self.redis.set(key, tat.timestamp())
+        await self.redis.expire(key, (tat - datetime.utcnow()).total_seconds() + 5.0)
 
     async def before_serving(self):
         self.redis = await create_redis(config.redis_address, encoding="utf-8")
