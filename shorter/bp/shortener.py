@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from urllib.parse import urlunparse
 
 from quart import Blueprint, current_app, redirect, request, url_for
@@ -21,7 +21,7 @@ async def create():
     if ttl == -1:
         ttl = config.max_ttl
 
-    expires = (datetime.utcnow() + timedelta(seconds=ttl)).isoformat()
+    expires = datetime.utcnow().replace(tzinfo=timezone.utc) + timedelta(seconds=ttl)
     if ttl == -1:
         expires = None
 
@@ -44,7 +44,7 @@ async def create():
     return {
         "id": shortname,
         "url": url,
-        "expires": expires,
+        "expires": expires.isoformat() if expires else None,
     }
 
 
