@@ -1,5 +1,10 @@
 import os
 
+import dotenv
+
+dotenv.load_dotenv()
+
+
 redis_address = os.environ.get("REDIS_ADDRESS")
 
 allowed_hosts = os.environ.get("SHORTEN_ALLOWED_HOSTS", "*").split(",")
