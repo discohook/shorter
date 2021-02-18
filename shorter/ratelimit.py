@@ -32,7 +32,7 @@ class RedisStore(RateLimiterStoreABC):
 
 
 async def get_rate_limit_key():
-    ip = request.headers.get("X-Forwarded-For", request.remote_addr)
+    ip = request.headers.get("X-Real-IP", request.remote_addr)
     addr = ipaddress.ip_address(ip)
     if isinstance(addr, ipaddress.IPv6Address):
         addr = ipaddress.IPv6Network(f"{addr}/64", strict=False).network_address
