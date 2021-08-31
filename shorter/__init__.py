@@ -11,7 +11,7 @@ from shorter.errors import ApiError
 from shorter.ratelimit import rate_limiter
 
 app = Quart(__name__)
-app = cors(app)
+app = cors(app, expose_headers=["Location"])
 
 rate_limiter.init_app(app)
 
